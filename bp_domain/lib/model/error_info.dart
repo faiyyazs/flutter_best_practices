@@ -1,5 +1,7 @@
-class ErrorInfo{
-  String message;
-  String code;
-  String requestId;
+class ErrorInfo {
+  final String message;
+  final int code;
+  final String requestId;
+
+  ErrorInfo({this.message, this.code, this.requestId});
 }

@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:bp_domain/error/network_error.dart';
+import 'package:bp_domain/model/error_info.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/src/dio_error.dart';
 import 'package:retrofit/retrofit.dart';
 
 import 'get_error.dart';
@@ -17,20 +19,56 @@ Future<Either<NetworkError, T>> safeApiCall<T>(Future<T> apiCall) async {
       return Right(originalResponse);
     }
   } catch (throwable) {
-    print("throwable $throwable");
-    switch (throwable) {
+    print("Network error: ${throwable}");
+    switch (throwable.runtimeType) {
+      case DioError:
+        switch ((throwable).type) {
+          case DioErrorType.CONNECT_TIMEOUT:
+            //"Connection timeout with API server";
+            break;
+          case DioErrorType.SEND_TIMEOUT:
+            //"Receive timeout exception";
+            break;
+          case DioErrorType.RECEIVE_TIMEOUT:
+            //"Receive timeout in connection with API server";
+            break;
+          case DioErrorType.RESPONSE:
+            //"Received invalid status code: ${error.response.statusCode}";
+            break;
+          case DioErrorType.CANCEL:
+            //"Request to API server was cancelled"
+            break;
+          case DioErrorType.DEFAULT:
+            return Left(NetworkError(
+                message:
+                    "Connection to API server failed due to internet connection",
+                httpError: 503,
+                error: ErrorInfo(
+                    code: 503,
+                    message:
+                        "Connection to API server failed due to internet connection")));
+        }
+
+        break;
+
       case IOException:
-        return Left(
-            NetworkError(message: throwable.toString(), httpError: 502));
+        return Left(NetworkError(
+            message: throwable.toString(),
+            httpError: 502,
+            error: ErrorInfo(code: 502)));
 
       case HttpException:
         var code = throwable.code();
         return Left(NetworkError(
-            message: (throwable as HttpException).message, httpError: code));
+            message: (throwable as HttpException).message,
+            httpError: code,
+            error: ErrorInfo(code: code)));
 
       default:
-        return Left(
-            NetworkError(message: throwable.toString(), httpError: 502));
+        return Left(NetworkError(
+            message: throwable.toString(),
+            httpError: 502,
+            error: ErrorInfo(code: 502, message: throwable.toString())));
     }
   }
 }

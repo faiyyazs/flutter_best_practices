@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ProviderContainer providerContainer = ProviderScope.containerOf(context);
     final usecase = providerContainer.read(provinceFetchUseCase);
     (await usecase.verifyAndExecute(params: FetchProvinceParams()))
-        .fold((l) => null, (r) => print("Response ${r.map((e) => e.name).toList()}"));
+        .fold((l) => print("${l.message}"), (r) => print("Response ${r.map((e) => e.name).toList()}"));
   }
 
   @override

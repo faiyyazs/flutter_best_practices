@@ -5,6 +5,7 @@ enum AppErrorEnums{
 
   //custom error
   IOEXCEPTION,
+  NO_INTERNET_CONNECTION,
 
 
   // UI Errors
