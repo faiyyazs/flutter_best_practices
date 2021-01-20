@@ -5,10 +5,9 @@ import 'package:flutter/widgets.dart';
 
 import 'base_error.dart';
 
-class NetworkError extends BaseError {
-  NetworkError({
+class DatabaseError extends BaseError {
+  DatabaseError({
     @required String message,
-    @required int httpError,
     ErrorInfo error,
   }) : super(message, error: error);
 
@@ -20,19 +19,11 @@ class NetworkError extends BaseError {
   @override
   AppError transform() {
     switch (error?.code) {
-      case 503:
+      case 1:
         return AppError(
             message: error.message,
             error: error,
-            errorType: AppErrorEnums.NO_INTERNET_CONNECTION);
-
-      case 504:
-        return AppError(
-            message: "", error: error, errorType: AppErrorEnums.INVALID_TEST);
-
-      case 502:
-        return AppError(
-            message: "", error: error, errorType: AppErrorEnums.INVALID_TEST);
+            errorType: AppErrorEnums.DB_ERROR);
 
       default:
         return AppError(

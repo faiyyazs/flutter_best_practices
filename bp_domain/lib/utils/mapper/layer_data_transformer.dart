@@ -6,9 +6,5 @@
 mixin LayerDataTransformer<F, T> {
   T transform();
 
-  List<T> transformList({List<F> from});
-
   F restore(T data);
-
-  List<F> restoreList({List<T> from});
 }

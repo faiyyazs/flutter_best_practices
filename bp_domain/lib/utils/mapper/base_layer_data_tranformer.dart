@@ -27,7 +27,8 @@ import 'layer_data_transformer.dart';
  *
  */
 
-mixin BaseLayerDataTransformer<F, T> implements LayerDataTransformer<F, T> {
+abstract class BaseLayerDataTransformer<F, T>
+    implements LayerDataTransformer<F, T> {
   @override
   F restore(T data) {
     // TODO: implement restore
@@ -35,20 +36,8 @@ mixin BaseLayerDataTransformer<F, T> implements LayerDataTransformer<F, T> {
   }
 
   @override
-  List<F> restoreList({List<T> from}) {
-    var transformed = from.map((e) => restore(e)).toList();
-    return transformed;
-  }
-
-  @override
   T transform() {
     // TODO: implement transform
     throw UnimplementedError();
-  }
-
-  @override
-  List<T> transformList({List<F> from}) {
-    var transformed = from.map((e) => transform()).toList();
-    return transformed;
   }
 }

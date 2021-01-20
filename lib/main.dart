@@ -1,4 +1,4 @@
-import 'package:bp_domain/usecase/fetch_province.dart';
+import 'package:bp_domain/usecase/fetch_update_province.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_best_pratices/di/usecases_module.dart';
 import 'package:flutter_riverpod/all.dart';
@@ -61,9 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
     ProviderContainer providerContainer = ProviderScope.containerOf(context);
-    final usecase = providerContainer.read(provinceFetchUseCase);
-    (await usecase.verifyAndExecute(params: FetchProvinceParams()))
-        .fold((l) => print("${l.message}"), (r) => print("Response ${r.map((e) => e.name).toList()}"));
+    final FetchUpdateProvinceUseCase usecase =
+        providerContainer.read(provinceFetchAndUpdateUseCase);
+    (await usecase.verifyAndExecute(params: FetchUpdateProvinceParams())).fold(
+        (l) => print("${l.message}"),
+        (r) => print("Response ${r.map((e) => e.name).toList()}"));
   }
 
   @override

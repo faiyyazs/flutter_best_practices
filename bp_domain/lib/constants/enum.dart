@@ -10,5 +10,6 @@ enum AppErrorEnums{
 
   // UI Errors
   INVALID_TEST,
+  DB_ERROR,
 
 }

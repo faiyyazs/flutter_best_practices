@@ -1,4 +1,5 @@
 import 'package:bp_domain/error/app_error.dart';
+import 'package:bp_domain/error/base_error.dart';
 import 'package:bp_domain/error/network_error.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
@@ -18,5 +19,5 @@ abstract class BaseUseCase<P extends Params, T> {
             }, (result) => Right(result))));
   }
 
-  Future<Either<NetworkError, T>> execute({@required P params});
+  Future<Either<BaseError, T>> execute({@required P params});
 }
