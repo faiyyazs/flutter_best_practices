@@ -8,7 +8,12 @@ class FloorDbService {
 
   FloorDbService._internal();
 
-  factory FloorDbService() {
+  static Callback callback;
+  static String dbName;
+
+  factory FloorDbService(Callback dbCallBack, String databaseName) {
+    callback = callback;
+    dbName = databaseName;
     return connect;
   }
 
@@ -22,21 +27,8 @@ class FloorDbService {
   }
 
   Future<AppDatabase> _initializeDatabase() async {
-    final callback = Callback(
-      onCreate: (database, version) async {
-        print("created");
-        /* database has been created */
-        print("Database Path: ${database.path}");
-      },
-      onOpen: (database) async {
-        /* database has been opened */
-      },
-      onUpgrade: (database, startVersion, endVersion) {
-        /* database has been upgraded */
-      },
-    );
     return await $FloorAppDatabase
-        .databaseBuilder('appDb.db')
+        .databaseBuilder(dbName)
         .addCallback(callback)
         .build();
   }
