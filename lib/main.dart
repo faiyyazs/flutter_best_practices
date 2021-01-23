@@ -1,4 +1,5 @@
 import 'package:bp_domain/usecase/fetch_update_province.dart';
+import 'package:bp_domain/usecase/fetch_jobs_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_best_pratices/di/usecases_module.dart';
 import 'package:flutter_riverpod/all.dart';
@@ -63,9 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
     ProviderContainer providerContainer = ProviderScope.containerOf(context);
     final FetchUpdateProvinceUseCase usecase =
         providerContainer.read(provinceFetchAndUpdateUseCase);
+    final FetchJobUseCase fetchJobUseCase =
+        providerContainer.read(fetchJobUseCaseProvider);
     (await usecase.verifyAndExecute(params: FetchUpdateProvinceParams())).fold(
         (l) => print("${l.message}"),
         (r) => print("Response ${r.map((e) => e.name).toList()}"));
+
+    (await fetchJobUseCase.verifyAndExecute(params: FetchJobParams())).fold(
+        (l) => print("${l.message}"),
+        (r) => print("Response ${r.map((e) => e.title).toList()}"));
   }
 
   @override

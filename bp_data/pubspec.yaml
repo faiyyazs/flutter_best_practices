@@ -21,6 +21,7 @@ dependencies:
     path: ../bp_domain
   floor: ^0.18.0
   floor_generator: ^0.18.0
+  graphql: ^3.1.0
 
 dev_dependencies:
   flutter_test:

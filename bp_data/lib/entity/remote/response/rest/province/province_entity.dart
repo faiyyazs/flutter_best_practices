@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'province_entity.g.dart';
 
 @JsonSerializable()
-class ProvinceEntity with BaseLayerDataTransformer<ProvinceEntity,Province> {
+class ProvinceEntity with BaseLayerDataTransformer<ProvinceEntity, Province> {
   final int id;
 
   @JsonKey(name: "nama")
@@ -20,10 +20,6 @@ class ProvinceEntity with BaseLayerDataTransformer<ProvinceEntity,Province> {
 
   @override
   Province transform() {
-    return Province(
-      id: id,
-      name: name
-    );
+    return Province(id: id, name: name);
   }
-
 }

@@ -1,6 +1,6 @@
 import 'package:bp_data/db/utils/safe_db_call.dart';
 import 'package:bp_data/entity/local/province_db_entity.dart';
-import 'package:bp_data/entity/remote/response/province_response_entity.dart';
+import 'package:bp_data/entity/remote/response/rest/province/province_response_entity.dart';
 import 'package:bp_data/network/utils/safe_api_call.dart';
 import 'package:bp_data/source/province/province_repository_datasources.dart';
 import 'package:bp_domain/error/database_error.dart';
@@ -14,15 +14,15 @@ class ProvinceDataRepositoryImpl extends ProvinceDataRepository {
   final ProvinceRemoteRepoDataStore _provinceRemoteRepoDataStore;
   final ProvinceLocalRepoDataStore _provinceLocalRepoDataStore;
 
-  ProvinceDataRepositoryImpl(this._provinceRemoteRepoDataStore,
-      this._provinceLocalRepoDataStore);
+  ProvinceDataRepositoryImpl(
+      this._provinceRemoteRepoDataStore, this._provinceLocalRepoDataStore);
 
   @override
   Future<Either<NetworkError, List<Province>>> getRemoteProvinceList() async {
     final response = await safeApiCall<HttpResponse<ProvinceResponseEntity>>(
         _provinceRemoteRepoDataStore.getProvinces());
     return response?.fold(
-            (left) => Left(left), (r) => Right(r.data.transform()));
+        (left) => Left(left), (r) => Right(r.data.transform()));
   }
 
   @override
@@ -30,6 +30,9 @@ class ProvinceDataRepositoryImpl extends ProvinceDataRepository {
       List<Province> data) async {
     final result = await safeDbCall(_provinceLocalRepoDataStore.insertAll(
         data.map((e) => ProvinceDBEntity(name: e.name, id: e.id)).toList()));
-    return result.fold((l) => Left(l), (r) => Right(data),);
+    return result.fold(
+      (l) => Left(l),
+      (r) => Right(data),
+    );
   }
 }

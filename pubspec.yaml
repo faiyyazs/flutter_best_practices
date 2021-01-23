@@ -34,6 +34,9 @@ dependencies:
   bp_data:
     path: bp_data
 
+dependency_overrides:
+  rxdart: ^0.25.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

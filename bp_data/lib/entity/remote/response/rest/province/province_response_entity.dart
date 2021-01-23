@@ -1,4 +1,4 @@
-import 'package:bp_data/entity/remote/response/province/province_entity.dart';
+import 'package:bp_data/entity/remote/response/rest/province/province_entity.dart';
 import 'package:bp_domain/model/province.dart';
 import 'package:bp_domain/utils/mapper/base_layer_data_tranformer.dart';
 import 'package:json_annotation/json_annotation.dart';

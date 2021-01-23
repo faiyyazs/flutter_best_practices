@@ -1,5 +1,4 @@
-enum AppErrorEnums{
-
+enum AppErrorEnums {
   // server message
   SERVER_MESSAGE,
 
@@ -11,5 +10,5 @@ enum AppErrorEnums{
   // UI Errors
   INVALID_TEST,
   DB_ERROR,
-
+  JOB_NOT_FOUND
 }

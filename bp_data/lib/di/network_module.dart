@@ -1,4 +1,6 @@
-import 'package:bp_data/network/api/api_service.dart';
+import 'package:bp_data/network/api/graphql/graphql_service.dart';
+import 'package:bp_data/network/api/graphql/job_service.dart';
+import 'package:bp_data/network/api/rest/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -16,4 +18,14 @@ final dioProvider = Provider<Dio>(
 
 final apiServiceProvider = Provider<ApiService>(
   (ref) => ApiService(ref.read(dioProvider)),
+);
+
+final graphServiceProvider = Provider<GraphQLService>(
+  (ref) => GraphQLService(),
+);
+
+final jobServiceProvider = Provider<JobService>(
+  (ref) => JobService(
+    ref.read(graphServiceProvider),
+  ),
 );
