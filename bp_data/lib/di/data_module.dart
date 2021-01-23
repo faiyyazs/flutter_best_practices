@@ -5,29 +5,16 @@ import 'package:bp_data/source/province/local/province_local_repository_datasour
 import 'package:bp_data/source/province/province_repository_datasources.dart';
 import 'package:bp_data/source/province/remote/province_remote_repository_datasource.dart';
 import 'package:bp_domain/repository/provice_data_repository.dart';
-import 'package:floor/floor.dart';
 import 'package:riverpod/riverpod.dart';
 
-final dbNameProvider = Provider<String>((ref) => "appDb.db");
-
-final dbCallBackProvider = Provider<Callback>((ref) => Callback(
-      onCreate: (database, version) async {
-        print("created");
-/* database has been created */
-        print("Database Path: ${database.path}");
-      },
-      onOpen: (database) async {
-/* database has been opened */
-      },
-      onUpgrade: (database, startVersion, endVersion) {
-/* database has been upgraded */
-      },
-    ));
+class DatabaseProperties {
+  static const String DB_NAME = "appDb.db"; //BuildConfig.DB_NAME;
+  static const int DB_VERSION = 1; //BuildConfig.DB_VERSION;
+}
 
 final floorAppDatabase = Provider<FloorDbService>(
   (ref) => FloorDbService(
-    ref.read(dbCallBackProvider),
-    ref.read(dbNameProvider),
+    DatabaseProperties.DB_NAME,
   ),
 );
 

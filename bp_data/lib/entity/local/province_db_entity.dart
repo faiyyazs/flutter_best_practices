@@ -6,8 +6,8 @@ import 'package:floor/floor.dart';
 class ProvinceDBEntity
     extends BaseLayerDataTransformer<ProvinceDBEntity, Province> {
   @primaryKey
-  final int id;
-  final String name;
+  int id;
+  String name;
 
   ProvinceDBEntity({this.id, this.name = ""});
 
@@ -18,7 +18,8 @@ class ProvinceDBEntity
 
   @override
   restore(data) {
-    return ProvinceDBEntity(id: data.id, name: data.name);
+    this.id = data.id;
+    this.name = data.name;
+    return this;
   }
 }
-
